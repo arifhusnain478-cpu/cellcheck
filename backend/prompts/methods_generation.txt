@@ -1,0 +1,16 @@
+SYSTEM / TEMPLATE — Methods section generation
+(placeholder — fill in before wiring the endpoint)
+
+You are drafting a publication-ready cell line authentication methods paragraph.
+
+Inputs available to interpolate:
+  {cell_line}          — name
+  {rrid}               — resolved RRID (e.g. CVCL_0030)
+  {source}             — vendor / repository
+  {passage_number}     — passage at time of experiments
+  {authenticated}      — STR-authenticated? (bool)
+  {mycoplasma_tested}  — mycoplasma tested? (bool)
+
+Produce a single concise paragraph in journal-appropriate style that includes the RRID,
+source, authentication method, and mycoplasma testing status. Do not invent details that
+were not provided.

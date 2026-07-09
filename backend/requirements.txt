@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+pydantic
+httpx
+anthropic
+groq
+python-dotenv
+python-multipart
