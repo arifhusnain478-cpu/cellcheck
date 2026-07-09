@@ -46,9 +46,7 @@ grounded explanations of decisions made deterministically in code.
 """
 
 try:
-    # ssr_mode=False disables Gradio's Node SSR server, which otherwise tries to bind
-    # its own port and conflicts with HF's port management. We don't need SSR.
-    with gr.Blocks(title="CellCheck API", analytics_enabled=False, ssr_mode=False) as demo:
+    with gr.Blocks(title="CellCheck API", analytics_enabled=False) as demo:
         gr.Markdown(_LANDING)
 
     # Mount the Gradio UI onto the FastAPI app at "/". Returns the same app object
@@ -69,10 +67,10 @@ if __name__ == "__main__" and not os.environ.get("SPACE_ID"):
     uvicorn.run(app, host=host, port=port)
 
 # HF Spaces (sdk: gradio): HF runs `python app.py` but starts no server itself, so we
-# serve the MOUNTED app with uvicorn — one process, one port (7860), serving the
-# Gradio landing AND all /api/cellcheck/* + /docs routes. (demo.launch() would spin up
-# Gradio's Node SSR server, which fights HF for the port; uvicorn on `app` avoids that,
-# and ssr_mode=False above disables SSR entirely.) Runs only on HF (SPACE_ID is set).
+# serve the MOUNTED app with uvicorn — one process, one port (7860), serving the Gradio
+# landing AND all /api/cellcheck/* + /docs routes. (demo.launch() spins up Gradio's Node
+# SSR server, which fights HF for the port; uvicorn on `app` serves everything cleanly.)
+# Runs only on HF (SPACE_ID is set there, unset locally).
 if os.environ.get("SPACE_ID"):
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=7860)
