@@ -1,10 +1,15 @@
 # HuggingFace **Gradio** Space entrypoint for the CellCheck API.
 #
-# Debug prints run FIRST (flush=True) so a silent startup crash on HF — Python 3.10
-# there vs 3.14 in dev — reveals exactly which import failed before the process dies.
 # main.app holds all /api/cellcheck/* routes; gr.mount_gradio_app() mounts a Gradio
-# landing page onto it, and HF serves the resulting top-level `app` itself (so we do
-# not start a server here except for a local `python app.py`, guarded by SPACE_ID).
+# landing page onto it, and uvicorn serves the whole thing on port 7860 (see bottom).
+# Debug prints (flush=True) reveal which import fails if the container crashes silently.
+import os
+
+# Disable Gradio's server-side rendering. MUST be set before `import gradio` (gradio
+# reads it at import time). SSR spins up a Node server that grabs port 7860 before our
+# uvicorn can -> [Errno 98] Address already in use.
+os.environ["GRADIO_SSR_MODE"] = "False"
+
 import sys
 
 print(f"Python: {sys.version}", flush=True)
@@ -22,8 +27,6 @@ try:
 except Exception as e:
     print(f"GRADIO IMPORT ERROR: {e}", flush=True)
     raise
-
-import os
 
 _LANDING = """
 # 🧬 CellCheck API
