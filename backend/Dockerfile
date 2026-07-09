@@ -1,5 +1,8 @@
-# CellCheck API — container image for HuggingFace Spaces (Docker SDK).
-# The Space's README.md frontmatter sets app_port: 7860 to match EXPOSE/CMD below.
+# CellCheck API — container image for Docker-based hosting.
+#
+# BACKUP ONLY: the live deployment is a free HuggingFace *Gradio* Space (see app.py
+# + README.md `sdk: gradio`), which does not use this Dockerfile. Kept for Docker
+# Spaces (paid) or any other container host. Runs the same FastAPI app on port 7860.
 FROM python:3.11-slim
 
 # Unbuffered stdout/stderr so logs stream live to the HF Spaces log viewer;

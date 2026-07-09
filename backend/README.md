@@ -3,14 +3,18 @@ title: CellCheck API
 emoji: 🧬
 colorFrom: green
 colorTo: blue
-sdk: docker
-app_port: 7860
+sdk: gradio
+app_file: app.py
+pinned: false
 ---
 
 # CellCheck API
 
-Backend for **CellCheck** — an AI-native cell line authentication tool. FastAPI +
-Docker, deployed as a HuggingFace Space (Docker SDK, port 7860).
+Backend for **CellCheck** — an AI-native cell line authentication tool. A FastAPI
+service hosted on a free HuggingFace **Gradio** Space: `app.py` mounts the FastAPI
+app inside a Gradio Blocks landing page via `gr.mount_gradio_app()`, so every
+`/api/cellcheck/*` route works unchanged (Gradio is just the hosting container).
+A `Dockerfile` is kept as a backup for Docker-based hosting but is unused here.
 
 It cross-references live authoritative sources and uses an LLM only to *phrase*
 grounded explanations of decisions made deterministically in code (never to invent
@@ -55,5 +59,7 @@ once that URL is known.
 
 ```bash
 pip install -r requirements.txt
-uvicorn main:app --reload      # http://localhost:8000
+
+uvicorn main:app --reload   # API only, http://localhost:8000 (no gradio needed)
+python app.py               # full Space (Gradio landing + API), http://localhost:7860
 ```
