@@ -10,9 +10,11 @@ Route precedence: the FastAPI routes (``/openapi.json``, ``/docs``,
 ``/api/cellcheck/*``) are registered in main.py before the Gradio mount is added
 here, so they always match first — the ``/`` mount only catches everything else.
 
-HF runs ``python app.py``; the ``__main__`` block below starts uvicorn on port 7860
-(the Gradio Space convention). Locally you can run either ``python app.py`` (full
-Space, needs gradio) or ``uvicorn main:app`` (API only, no gradio needed).
+On HF Spaces (``sdk: gradio``), HF auto-detects the top-level ``app`` (the FastAPI
+app returned by ``mount_gradio_app``) and serves it with uvicorn itself — so this
+file must NOT start its own server, or both bind port 7860 ([Errno 98] Address
+already in use). The ``__main__`` block is therefore guarded to run only for a LOCAL
+``python app.py``; you can also run ``uvicorn main:app`` for the API alone.
 """
 import os
 
@@ -49,7 +51,11 @@ with gr.Blocks(title="CellCheck API", analytics_enabled=False) as demo:
 app = gr.mount_gradio_app(app, demo, path="/")
 
 
-if __name__ == "__main__":
+# On HF Spaces (sdk: gradio), HF auto-detects the top-level `app` (the FastAPI app
+# returned by mount_gradio_app) and serves it with uvicorn itself. We must NOT start
+# a server here too, or both bind port 7860 -> [Errno 98] Address already in use.
+# HF sets SPACE_ID, so this block runs ONLY for a local `python app.py`.
+if __name__ == "__main__" and not os.environ.get("SPACE_ID"):
     host = os.getenv("GRADIO_SERVER_NAME", "0.0.0.0")
     port = int(os.getenv("GRADIO_SERVER_PORT") or os.getenv("PORT") or 7860)
     uvicorn.run(app, host=host, port=port)

@@ -25,3 +25,6 @@ npm-debug.log*
 .idea/
 .vscode/
 Thumbs.db
+
+# Local HuggingFace Space clone — its own git repo, pushed to HF separately.
+hf-deploy/
