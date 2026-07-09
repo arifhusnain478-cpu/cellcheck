@@ -58,11 +58,16 @@ except Exception as e:
     raise
 
 
-# On HF Spaces (sdk: gradio), HF serves the top-level `app` itself; starting uvicorn
-# here too would double-bind port 7860 -> [Errno 98] Address already in use. HF sets
-# SPACE_ID, so this runs ONLY for a local `python app.py`.
+# Local dev only: serve the mounted app (Gradio landing + /api/cellcheck/* + /docs)
+# with uvicorn. Guarded by SPACE_ID so it never runs on HF.
 if __name__ == "__main__" and not os.environ.get("SPACE_ID"):
     import uvicorn
     host = os.getenv("GRADIO_SERVER_NAME", "0.0.0.0")
     port = int(os.getenv("GRADIO_SERVER_PORT") or os.getenv("PORT") or 7860)
     uvicorn.run(app, host=host, port=port)
+
+# HF Spaces (sdk: gradio): HF does NOT auto-start a server, so without an explicit
+# launch the module just loads and exits -> Runtime error. Launch Gradio to bind 7860
+# and keep the process alive. Runs only on HF (SPACE_ID is set there, unset locally).
+if os.environ.get("SPACE_ID"):
+    demo.launch(server_name="0.0.0.0", server_port=7860)
