@@ -73,3 +73,4 @@ cellcheck/
 
 Scaffold only — every service method and route returns a `# TODO` stub / mock. Implementation order:
 Quick Check → STR Reader → Methods Generator.
+
