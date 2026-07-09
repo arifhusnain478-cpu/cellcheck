@@ -1,0 +1,28 @@
+# Keep the image lean and secret-free. NOTE: data/ and prompts/ are intentionally
+# NOT excluded — the app needs data/iclac_register.json, data/demo_cache.json and
+# the prompt templates at runtime.
+
+# Python caches
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# Secrets / local env (config comes from Space environment variables)
+.env
+.env.*
+
+# Virtualenvs
+.venv/
+venv/
+
+# Dev-only tooling (not needed at runtime)
+scripts/
+tests/
+
+# VCS / Docker meta
+.git/
+.gitignore
+.dockerignore
+Dockerfile

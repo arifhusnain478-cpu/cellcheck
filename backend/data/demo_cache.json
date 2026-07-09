@@ -1,0 +1,37 @@
+{
+  "methods_demo_cache": {
+    "CVCL_0031|cancer research": {
+      "methods_paragraph": "The MCF-7 cell line, derived from a pleural effusion of invasive breast carcinoma of no special type in Homo sapiens, RRID:CVCL_0031, was obtained from ATCC (HTB-22). The cells were authenticated using the ATCC STR profiling service on 2026-05-10. Mycoplasma testing was performed, with a negative result reported on 2026-05-08. The cells were used within a passage range of 8-15."
+    }
+  },
+  "quick_check": {
+    "CVCL_0030": {
+      "explanation": "The HeLa cell line is not listed in the ICLAC Register of Misidentified Cell Lines, which means it has no documented misidentification. This line is known to be of human origin, specifically from a human papillomavirus-related endocervical adenocarcinoma derived from the uterus, cervix. As a result, the HeLa cell line has been given a green verdict, indicating that it is not listed as misidentified.",
+      "source_lab": null
+    },
+    "CVCL_0031": {
+      "explanation": "The MCF-7 cell line has no documented misidentification, as it is not listed in the ICLAC Register of Misidentified Cell Lines. This means that there is no known evidence to suggest that the MCF-7 cell line is actually a different cell line. The MCF-7 cell line is identified as being derived from a human invasive breast carcinoma of no special type, originating from a pleural effusion, and its identity has not been disputed in the ICLAC register.",
+      "source_lab": "Michigan Cancer Foundation"
+    },
+    "CVCL_0045": {
+      "explanation": "The HEK293 cell line has no documented misidentification, as it is not listed in the ICLAC Register of Misidentified Cell Lines. This means that the HEK293 line has not been identified as being cross-contaminated with another cell line. The HEK293 cell line is known to be derived from human fetal kidney cells, and its identity as such is not disputed in the ICLAC register.",
+      "source_lab": null
+    },
+    "CVCL_0062": {
+      "explanation": "The MDA-MB-231 cell line is not listed in the ICLAC Register of Misidentified Cell Lines, which means it has no documented misidentification. This line is known to be derived from a breast adenocarcinoma, specifically from a pleural effusion, and is of human origin. As a result, the MDA-MB-231 cell line is considered to have no known misidentification.",
+      "source_lab": "MD Anderson Cancer Center"
+    },
+    "CVCL_0417": {
+      "explanation": "The MDA-MB-435 cell line is listed in the ICLAC Register of Misidentified Cell Lines, indicating that it is not what it is commonly claimed to be, which is a breast carcinoma. Actually, it is the M14 melanoma cell line. This misidentification was reported in 2002, which means the MDA-MB-435 line is actually a melanoma, not a breast carcinoma as often assumed.",
+      "source_lab": "MD Anderson Cancer Center"
+    }
+  },
+  "str_demo_cache": {
+    "mcf-7|CVCL_0030": {
+      "interpretation": "The sample is not what it is claimed to be, as its STR profile matches the HeLa cell line with 100% similarity, not the claimed MCF-7 identity. This suggests that the sample is likely misidentified or cross-contaminated with the HeLa cell line. The perfect match to HeLa, with no differing loci at the 8 loci compared, supports this conclusion."
+    },
+    "mcf-7|CVCL_0031": {
+      "interpretation": "The sample is confirmed to be MCF-7, as it has a 100% similarity to the MCF-7 reference line. This match is based on a comparison of 8 loci, all of which are fully matching, with no differences found. This result supports the claimed identity of the sample as MCF-7."
+    }
+  }
+}

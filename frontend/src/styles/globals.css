@@ -99,7 +99,21 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    @apply transition-colors duration-200;
+  }
   body {
     @apply bg-background text-foreground;
+  }
+  /* Smooth theme switch: fade colored surfaces (cards, inputs, badges, borders,
+     text, icons) instead of snapping. Only fires on a theme change, not on first
+     paint (the no-flash script sets the class before render). Tailwind's own
+     transition-* utilities (on buttons, tabs) live in a later layer and win. */
+  *,
+  ::before,
+  ::after {
+    transition-property: color, background-color, border-color, fill, stroke;
+    transition-duration: 200ms;
+    transition-timing-function: ease;
   }
 }

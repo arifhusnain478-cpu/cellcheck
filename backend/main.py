@@ -4,6 +4,7 @@ Run locally from this directory:
     uvicorn main:app --reload
 """
 import os
+from pathlib import Path
 
 import uvicorn
 from dotenv import load_dotenv
@@ -12,7 +13,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from api import methods_generator, quick_check, str_reader
 
-load_dotenv()
+load_dotenv()  # default search from CWD upward
+load_dotenv(Path(__file__).resolve().parent / ".env")  # backend/.env, regardless of CWD
 
 app = FastAPI(title="CellCheck API", version="0.1.0")
 

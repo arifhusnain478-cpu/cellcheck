@@ -4,6 +4,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CellCheck</title>
+    <script>
+      // Set the theme before first paint to avoid a flash of the wrong theme.
+      // Mirrors getInitialTheme() in App.jsx.
+      (function () {
+        try {
+          var stored = localStorage.getItem("cellcheck-theme");
+          var dark =
+            stored === "dark" ||
+            (stored === null &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches);
+          if (dark) document.documentElement.classList.add("dark");
+        } catch (e) {
+          /* localStorage/matchMedia unavailable — default to light */
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -71,6 +71,10 @@ cellcheck/
 
 ## Status
 
-Scaffold only — every service method and route returns a `# TODO` stub / mock. Implementation order:
-Quick Check → STR Reader → Methods Generator.
+In progress — building the vertical slices for Quick Check → STR Reader → Methods Generator.
+The Cellosaurus identity client is implemented; the rest of the service methods and routes are
+still `# TODO` stubs / mocks.
+
+Deferred or scoped-down features are tracked in [docs/BACKLOG.md](docs/BACKLOG.md) (with effort
+estimates to add them back).
 
