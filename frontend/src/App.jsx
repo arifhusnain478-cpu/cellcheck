@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { FlaskConical, Sun, Moon } from "lucide-react";
+import { Sun, Moon } from "lucide-react";
+import { CellCheckLogo } from "./components/CellCheckLogo";
 import QuickCheck from "@/components/QuickCheck/QuickCheck";
 import STRReader from "@/components/STRReader/STRReader";
 import MethodsGenerator from "@/components/MethodsGenerator/MethodsGenerator";
@@ -44,7 +45,7 @@ export default function App() {
         <div className="mx-auto flex max-w-3xl items-start justify-between gap-4 px-6 py-8">
           <div>
             <div className="flex items-center gap-2">
-              <FlaskConical className="h-6 w-6" aria-hidden="true" />
+              <CellCheckLogo className="h-8 w-8" />
               <h1 className="text-2xl font-bold tracking-tight">CellCheck</h1>
             </div>
             <p className="mt-1 text-muted-foreground">
