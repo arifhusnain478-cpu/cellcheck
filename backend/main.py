@@ -18,19 +18,12 @@ load_dotenv(Path(__file__).resolve().parent / ".env")  # backend/.env, regardles
 
 app = FastAPI(title="CellCheck API", version="0.1.0")
 
-# CORS is locked to known frontends: the local dev/preview servers and the deployed
-# Vercel frontend. NOTE: this is the FRONTEND origin (who may call the API), not the
-# Koyeb backend URL.
-# TODO: replace the placeholder Vercel URL below with your real frontend domain.
-ALLOWED_ORIGINS = [
-    "http://localhost:5173",          # Vite dev server
-    "http://localhost:4173",          # Vite preview server
-    "https://cellcheck.vercel.app",   # TODO: real Vercel frontend URL
-]
+# In production, frontend and API share one origin on Vercel, so CORS is a non-issue.
+# This middleware only matters for LOCAL dev when hitting the backend directly (the
+# Vite dev proxy already keeps requests same-origin) — so we just allow localhost.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=ALLOWED_ORIGINS,
-    allow_credentials=True,
+    allow_origins=["http://localhost:5173", "http://localhost:4173"],
     allow_methods=["*"],
     allow_headers=["*"],
 )

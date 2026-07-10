@@ -1,10 +1,9 @@
 import axios from "axios";
 
-// Endpoints follow the API Contract in PRD.md (source of truth).
-const baseURL = import.meta.env.VITE_API_URL || "http://localhost:8000";
-
+// Frontend and API share one origin (Vercel in prod; a Vite dev proxy locally — see
+// vite.config.js), so the base URL is relative — no domain needed.
 const api = axios.create({
-  baseURL: `${baseURL}/api/cellcheck`,
+  baseURL: "/api/cellcheck",
   headers: { "Content-Type": "application/json" },
 });
 

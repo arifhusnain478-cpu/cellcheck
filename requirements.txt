@@ -1,0 +1,9 @@
+# Python dependencies for the Vercel serverless functions in api/ (imports the
+# backend/ code, which is bundled via vercel.json includeFiles). Mirrors the runtime
+# deps of backend/requirements.txt minus the local-server-only ones (uvicorn).
+fastapi
+pydantic
+httpx
+anthropic
+groq
+python-dotenv

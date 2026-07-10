@@ -1,8 +1,10 @@
 # CellCheck API
 
 Backend for **CellCheck** — an AI-native cell line authentication tool. A FastAPI
-service, containerized (see `Dockerfile`) and deployed on **Koyeb** (free tier).
-See [../docs/DEPLOY_KOYEB.md](../docs/DEPLOY_KOYEB.md) for deployment steps.
+service. In production it is deployed as **Vercel Python serverless functions**
+(wrapped per-endpoint under `../api/cellcheck/`) — see
+[../docs/DEPLOY_VERCEL.md](../docs/DEPLOY_VERCEL.md). The `Dockerfile` is retained as
+a fallback for container-based hosting.
 
 It cross-references live authoritative sources and uses an LLM only to *phrase*
 grounded explanations of decisions made deterministically in code (never to invent

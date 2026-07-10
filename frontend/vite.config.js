@@ -13,5 +13,13 @@ export default defineConfig({
   },
   server: {
     port: 5173,
+    // Local dev: proxy /api/* to the local backend (uvicorn main:app on :8000) so the
+    // relative API base in src/api/client.js works the same as it does on Vercel.
+    proxy: {
+      "/api": {
+        target: "http://localhost:8000",
+        changeOrigin: true,
+      },
+    },
   },
 });
