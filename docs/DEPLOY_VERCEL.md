@@ -3,9 +3,10 @@
 The whole app runs on a single Vercel project — zero cost, no card:
 
 - **Frontend** — the Vite/React app in `frontend/`, built to static files.
-- **Backend** — Python **serverless functions** in `api/cellcheck/` that wrap the
-  existing FastAPI routers in `backend/` (imported by file path; `backend/**` is
-  bundled into each function via `vercel.json` → `includeFiles`).
+- **Backend** — a single Python **serverless function** at `api/index.py` (Vercel's
+  FastAPI detection finds it there) that builds the full FastAPI app from the existing
+  routers in `backend/` (imported by file path; `backend/**` is bundled into the
+  function via `vercel.json` → `includeFiles`). A rewrite sends every `/api/*` here.
 
 Because both are served from the same origin, `src/api/client.js` uses a **relative**
 base URL (`/api/cellcheck`) and there is no CORS to configure.
@@ -13,14 +14,11 @@ base URL (`/api/cellcheck`) and there is no CORS to configure.
 ## Layout
 
 ```
-vercel.json                     # build + functions + rewrites (project root)
-requirements.txt                # Python deps for the serverless functions
-api/cellcheck/
-  quick.py                      # -> POST /api/cellcheck/quick
-  str-analysis.py               # -> POST /api/cellcheck/str-analysis
-  methods-section.py            # -> POST /api/cellcheck/methods-section
-  health.py                     # -> GET  /api/cellcheck/health
-backend/                        # unchanged; the functions import its routers/services
+vercel.json                     # build + function + rewrites (project root)
+requirements.txt                # Python deps for the serverless function
+api/index.py                    # the full FastAPI app: /api/cellcheck/{quick,
+                                #   str-analysis,methods-section,health}
+backend/                        # unchanged; api/index.py imports its routers/services
 frontend/                       # Vite app -> built to frontend/dist
 ```
 
