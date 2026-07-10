@@ -6,5 +6,3 @@ anthropic
 groq
 python-dotenv
 python-multipart
-# Hosts the FastAPI app as a free HuggingFace Gradio Space (see app.py).
-gradio

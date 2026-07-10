@@ -1,11 +1,10 @@
-# CellCheck API — container image for Docker-based hosting.
+# CellCheck API — container image (deployed on Koyeb, free tier).
 #
-# BACKUP ONLY: the live deployment is a free HuggingFace *Gradio* Space (see app.py
-# + README.md `sdk: gradio`), which does not use this Dockerfile. Kept for Docker
-# Spaces (paid) or any other container host. Runs the same FastAPI app on port 7860.
+# Serves the FastAPI app (main:app) directly with uvicorn on port 8000. No Gradio.
+# Build context must be this backend/ directory (see docs/DEPLOY_KOYEB.md).
 FROM python:3.11-slim
 
-# Unbuffered stdout/stderr so logs stream live to the HF Spaces log viewer;
+# Unbuffered stdout/stderr so logs stream live to the platform log viewer;
 # no .pyc clutter; no pip cache in the image layer.
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
@@ -21,9 +20,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # .dockerignore keeps secrets (.env), dev tooling (scripts/, tests/) and caches out.
 COPY . .
 
-# All configuration/secrets come from the environment (set as Space secrets):
+# All configuration/secrets come from the environment (set as Koyeb env vars/secrets):
 #   LLM_PROVIDER, ANTHROPIC_API_KEY / ANTHROPIC_MODEL, GROQ_API_KEY / GROQ_MODEL,
 #   CROSSREF_MAILTO (optional), DEMO_MODE (optional). No secrets are baked in.
-EXPOSE 7860
+EXPOSE 8000
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "7860"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

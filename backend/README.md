@@ -1,20 +1,8 @@
----
-title: CellCheck API
-emoji: 🧬
-colorFrom: green
-colorTo: blue
-sdk: gradio
-app_file: app.py
-pinned: false
----
-
 # CellCheck API
 
 Backend for **CellCheck** — an AI-native cell line authentication tool. A FastAPI
-service hosted on a free HuggingFace **Gradio** Space: `app.py` mounts the FastAPI
-app inside a Gradio Blocks landing page via `gr.mount_gradio_app()`, so every
-`/api/cellcheck/*` route works unchanged (Gradio is just the hosting container).
-A `Dockerfile` is kept as a backup for Docker-based hosting but is unused here.
+service, containerized (see `Dockerfile`) and deployed on **Koyeb** (free tier).
+See [../docs/DEPLOY_KOYEB.md](../docs/DEPLOY_KOYEB.md) for deployment steps.
 
 It cross-references live authoritative sources and uses an LLM only to *phrase*
 grounded explanations of decisions made deterministically in code (never to invent
@@ -38,9 +26,10 @@ Interactive docs at `/docs`.
 Cellosaurus (identity/RRID) · ICLAC Register of Misidentified Cell Lines · CLASTR
 (STR similarity) · Crossref (related/retracted papers).
 
-## Configuration (set these as Space secrets)
+## Configuration (environment variables)
 
-No secrets are baked into the image — everything is read from the environment:
+No secrets are baked into the image — everything is read from the environment (set
+these as Koyeb env vars / secrets):
 
 | Variable | Required | Notes |
 | --- | --- | --- |
@@ -52,14 +41,19 @@ No secrets are baked into the image — everything is read from the environment:
 | `CROSSREF_MAILTO` | no | contact email for Crossref's polite pool |
 | `DEMO_MODE` | no | `true` pins LLM prose to `data/demo_cache.json` for byte-stable demos; default `false` |
 
-CORS currently allows all origins (dev). Lock it to the Vercel frontend domain
-once that URL is known.
+CORS currently allows all origins (dev). Lock it to the frontend's domain once that
+URL is known.
 
 ## Run locally
 
 ```bash
 pip install -r requirements.txt
+uvicorn main:app --reload      # http://localhost:8000
+```
 
-uvicorn main:app --reload   # API only, http://localhost:8000 (no gradio needed)
-python app.py               # full Space (Gradio landing + API), http://localhost:7860
+## Container
+
+```bash
+docker build -t cellcheck-api .
+docker run -p 8000:8000 --env-file .env cellcheck-api   # http://localhost:8000
 ```
